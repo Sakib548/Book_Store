@@ -14,12 +14,8 @@ export default function Shop() {
       <h2 className="text-5xl font-bold text-center">All Books are here</h2>
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
         {books.map((book) => (
-          <Card
-            key={book._id}
-            className="max-w-sm"
-            imgAlt="Meaningful alt text for an image that is not purely decorative"
-            imgSrc="/images/blog/image-1.jpg"
-          >
+          <Card key={book._id} className="max-w-sm">
+            <img src={book.imageURL} alt="" className="h-96" />
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               Noteworthy technology acquisitions 2021
             </h5>
@@ -27,6 +23,10 @@ export default function Shop() {
               Here are the biggest enterprise technology acquisitions of 2021 so
               far, in reverse chronological order.
             </p>
+            <button className="bg-blue-700 font-semibold text-white py-2 rounded">
+              {" "}
+              Buy Now
+            </button>
           </Card>
         ))}
       </div>
