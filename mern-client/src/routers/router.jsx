@@ -1,7 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import About from "../components/About";
 import Blog from "../components/Blog";
+import Login from "../components/Login";
+import SignUp from "../components/SignUp";
 import Dashboard from "../dashboard/Dashboard";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import EditBooks from "../dashboard/EditBooks";
@@ -45,7 +48,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin/dashboard",
-        element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/admin/dashboard/upload",
@@ -62,6 +69,14 @@ const router = createBrowserRouter([
           fetch(`http://localhost:3000/book/${params.id}`),
       },
     ],
+  },
+  {
+    path: "sign-up",
+    element: <SignUp />,
+  },
+  {
+    path: "login",
+    element: <Login />,
   },
 ]);
 

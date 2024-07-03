@@ -1,5 +1,198 @@
+import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
+import { useState } from "react";
+import { useLoaderData, useParams } from "react-router-dom";
+
 const EditBooks = () => {
-  return <div>EditBooks</div>;
+  const { id } = useParams();
+  const {
+    bookTitle,
+    authorName,
+    imageURL,
+    category,
+    bookDescription,
+    bookPDFURL,
+  } = useLoaderData();
+  const bookCategories = [
+    "Fiction",
+    "Non Fiction",
+    "Mystery",
+    "Programming",
+    "Science Fiction",
+    "Fantasy",
+    "Horror",
+    "Bibliograpghy",
+    "Autobiograohy",
+    "History",
+    "Self-help",
+    "Memoirs",
+    "Business",
+    "Children Books",
+    "Travel",
+    "Religion",
+    "Art and Design",
+    "Dystopian",
+  ];
+
+  const [selectedBookCategory, setSelectedBookCategory] = useState(
+    bookCategories[0]
+  );
+
+  const handleChangeSelectedValue = (e) => {
+    console.log(e.target.value);
+    setSelectedBookCategory(e.target.value);
+  };
+
+  // handle book submission
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const bookTitle = form.bookTitle.value;
+    const authorName = form.authorName.value;
+    const imageURL = form.authorName.imageURL;
+    const bookDescription = form.bookDescription.value;
+    const bookPDFURL = form.bookPDFURL.value;
+
+    const updateBookObj = {
+      bookTitle,
+      authorName,
+      imageURL,
+      bookDescription,
+      bookPDFURL,
+    };
+    console.log(updateBookObj);
+
+    // better version
+    // const form = e.target;
+    // const formData = new FormData(form);
+
+    // const bookObj = Object.fromEntries(formData);
+
+    // console.log(bookObj);
+    fetch(`http://localhost:3000/book/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateBookObj),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        alert("Book updated successfully");
+        //form.reset();
+      });
+  };
+  return (
+    <div className="px-4 my-12">
+      <h2 className="mb-8 text-3xl font-bold">Update the book data</h2>
+
+      <form
+        onSubmit={handleUpdate}
+        className="flex lg:w-[1180px] flex-col flex-wrap gap-4"
+      >
+        {/* firstRow */}
+        <div className="flex gap-8">
+          <div className="lg:w-1/2">
+            <div className="mb-2 block">
+              <Label htmlFor="bookTitle" value="Book Title" />
+            </div>
+            <TextInput
+              id="bookTitle"
+              name="bookTitle"
+              type="text"
+              placeholder="Book Name"
+              required
+              defaultValue={bookTitle}
+            />
+          </div>
+          {/* authorName */}
+          <div className="lg:w-1/2">
+            <div className="mb-2 block">
+              <Label htmlFor="authorName" value="Author  Name" />
+            </div>
+            <TextInput
+              id="authorName"
+              name="authorName"
+              type="text"
+              placeholder="Author Name "
+              required
+              defaultValue={authorName}
+            />
+          </div>
+        </div>
+        {/* 2nd Row */}
+        <div className="flex gap-8">
+          <div className="lg:w-1/2">
+            <div className="mb-2 block">
+              <Label htmlFor="imageURL" value="Book image Url" />
+            </div>
+            <TextInput
+              id="imageURL"
+              name="imageURL"
+              type="text"
+              placeholder="Book Image URL"
+              required
+              defaultValue={imageURL}
+            />
+          </div>
+          {/* category */}
+          <div className="lg:w-1/2">
+            <div className="mb-2 block">
+              <Label htmlFor="inputState" value="Book Category"></Label>
+            </div>
+
+            <Select
+              id="inputState"
+              name="category"
+              className="w-full rounded"
+              value={selectedBookCategory}
+              onChange={handleChangeSelectedValue}
+            >
+              {bookCategories.map((option) => (
+                <option key={option}>{option}</option>
+              ))}
+            </Select>
+          </div>
+        </div>
+
+        {/* bookDescription */}
+        <div>
+          {/* category */}
+
+          <div className="mb-2 block">
+            <Label htmlFor="bookDescription" value="Book Description"></Label>
+          </div>
+          <Textarea
+            id="bookDescription"
+            placeholder="Write your Book Description"
+            className="w-full"
+            required
+            rows={4}
+            defaultValue={bookDescription}
+          />
+        </div>
+        {/* book pdf link */}
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="bookPDFURL" value="Book PDF URL"></Label>
+          </div>
+          <TextInput
+            id="bookPDFURL"
+            name="bookPDFURL"
+            placeholder="Book pdf url"
+            required
+            type="text"
+            defaultValue={bookPDFURL}
+          />
+        </div>
+
+        <Button type="submit" className="mt-5">
+          Update Book
+        </Button>
+      </form>
+    </div>
+  );
 };
 
 export default EditBooks;

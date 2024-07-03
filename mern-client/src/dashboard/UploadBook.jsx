@@ -20,6 +20,7 @@ const UploadBook = () => {
     "Travel",
     "Religion",
     "Art and Design",
+    "Dystopian",
   ];
 
   const [selectedBookCategory, setSelectedBookCategory] = useState(

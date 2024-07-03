@@ -13,6 +13,12 @@ const ManageBooks = () => {
   // delete all books
   const handleDelete = (id) => {
     console.log(id);
+    fetch(`http://localhost:3000/book/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => alert("Book is deleted successfully"));
+    //setAllBooks(data)
   };
   return (
     <div className="px-4 my-12">
