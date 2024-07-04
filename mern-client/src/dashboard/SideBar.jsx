@@ -1,4 +1,5 @@
 import { Sidebar } from "flowbite-react";
+import { useContext } from "react";
 import {
   HiArrowSmRight,
   HiChartPie,
@@ -8,16 +9,13 @@ import {
   HiTable,
   HiUser,
 } from "react-icons/hi";
-import UserImage from "../assets/profile.jpg";
+import { AuthContext } from "../context/AuthProvider";
 const SideBar = () => {
+  const { user } = useContext(AuthContext);
   return (
     <Sidebar aria-label="Sidebar with logo branding example">
-      <Sidebar.Logo
-        href="/admin/dashboard"
-        img={UserImage}
-        imgAlt="Flowbite logo"
-      >
-        Flowbite
+      <Sidebar.Logo href="/" img={user?.photoURL} imgAlt="Flowbite logo">
+        {user?.displayName}
       </Sidebar.Logo>
       <Sidebar.Items>
         <Sidebar.ItemGroup>

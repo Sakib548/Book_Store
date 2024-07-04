@@ -4,6 +4,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import About from "../components/About";
 import Blog from "../components/Blog";
 import Login from "../components/Login";
+import Logout from "../components/Logout";
 import SignUp from "../components/SignUp";
 import Dashboard from "../dashboard/Dashboard";
 import DashboardLayout from "../dashboard/DashboardLayout";
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <Login />,
+  },
+  {
+    path: "logout",
+    element: <Logout />,
   },
 ]);
 
